@@ -1,0 +1,27 @@
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+.mat-radio-button~.mat-radio-button {
+  margin-left: 16px;
+}
+
+.margin-top {
+  margin-top: 16px;
+}
+
+.mat-radio-group {
+  display: flex;
+
+  .mat-radio-button {
+    flex: 1;
+  }
+}
+
+.max-width{
+  width: 100%;
+}
+
+mat-card {
+  background-color: rgb(209, 171, 122);
+}

@@ -1,0 +1,55 @@
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+.mat-radio-button~.mat-radio-button {
+  margin-left: 16px;
+}
+
+.margin-top {
+  margin-top: 16px;
+}
+
+.mat-radio-group {
+  display: flex;
+
+  .mat-radio-button {
+    flex: 1;
+  }
+}
+
+.max-width {
+  width: 100%;
+}
+
+mat-card {
+  background-color: rgb(211, 171, 119);
+
+  mat-card-footer {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+  }
+
+  mat-card-content {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.importantText {
+  color: red;
+  align-self: center;
+}
+
+.editButton {
+  max-height: 4em;
+  margin-top: 20px;
+  padding: 0px 15px;
+  margin-left: auto;
+}
+
+.mat-card-list {
+  margin-top: 10px;
+  background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 0%, rgba(71, 59, 121, 1) 7%, rgba(209, 171, 122, 1) 29%);
+}
