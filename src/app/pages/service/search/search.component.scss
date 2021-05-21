@@ -1,0 +1,36 @@
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+.mat-radio-button~.mat-radio-button {
+  margin-left: 16px;
+}
+
+.margin-top {
+  margin-top: 16px;
+}
+
+.max-width {
+  width: 100%;
+}
+
+mat-card {
+  background-color: rgb(211, 171, 119);
+  margin: 0;
+  mat-card-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  mat-card-footer{
+    max-height: 4em;
+    padding: 0px;
+  }
+}
+
+.searchButton {
+  max-height: 4em;
+  padding: 0px 15px;
+  margin-left: auto;
+}

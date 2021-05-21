@@ -1,0 +1,87 @@
+<mat-card *ngIf="service" appOnHover>
+  <mat-card-header>
+    <mat-card-title>{{service.name}}</mat-card-title>
+    <ng-container>
+      <span class="importantText" *ngIf="service.hasStarted == 'true'; else notStarted">Started</span>
+      <ng-template #notStarted>
+        <span #notStarted class="importantText">Not started</span>
+      </ng-template>
+    </ng-container>
+    <button mat-button *ngIf="service.isStateful == 'true'" class="editButton"
+    (click)="openEditDialog()">
+      <mat-icon>receipt</mat-icon>
+      Edit
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <table class="max-width margin-bottom" cellspacing="0">
+      <tr *ngIf="service.category">
+        <td>
+          <span><b>Category: </b>{{service.category}}</span>
+        </td>
+      </tr>
+      <tr *ngIf="service.description">
+        <td>
+          <span><b>Description: </b>{{service.description}}</span>
+        </td>
+      </tr>
+      <tr *ngIf="service.serviceType">
+        <td>
+          <span><b>Service type: </b>{{service.serviceType}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td *ngIf="service.startDate">
+          <span><b>Start date: </b>{{ $any(service.startDate).toDate() | date: 'yyyy-MM-dd'}}</span>
+        </td>
+        <td *ngIf="service.endDate">
+          <span><b>End date: </b>{{ $any(service.endDate).toDate() | date: 'yyyy-MM-dd'}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td *ngIf="service.serviceDate">
+          <span><b>Created at: </b>{{ $any(service.serviceDate).toDate() | date: 'yyyy-MM-dd'}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span><b>Stared by: </b>{{service.startMode}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span><b>State: </b>{{service.state}}</span>
+        </td>
+      </tr>
+      <ng-container *ngIf="service.resources[0]">
+        <span><b>Resources: </b></span>
+        <mat-card class="mat-card-list margin-bottom" *ngFor="let item of service.resources; let i=index;">
+          <mat-card-content>
+            <span><b>{{i+1}}.</b> {{$any(item).name}}</span>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+      <ng-container *ngIf="service.notes[0]" style="margin-top: 10px;">
+        <span><b>Notes: </b></span>
+        <mat-card class="mat-card-list" *ngFor="let item of service.notes; let i=index;">
+          <mat-card-content>
+            <span><b>{{i+1}}.</b> {{$any(item).text}}</span>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+    </table>
+  </mat-card-content>
+  <mat-card-footer>
+    <ng-container *ngIf="service.isServiceEnabled == 'false'">
+      <span class="importantText" *ngIf="service.hasStarted == 'false'; else failed">Service has NOT been enabled for
+        use</span>
+      <ng-template #failed>
+        <span class="importantText">Service has failed</span>
+      </ng-template>
+    </ng-container>
+    <button mat-button (click)="openDialog()">
+      <mat-icon color="warn">delete</mat-icon>
+      Remove service
+    </button>
+  </mat-card-footer>
+</mat-card>

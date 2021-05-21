@@ -1,0 +1,35 @@
+<app-container *ngIf="form" [formGroup]="form">
+
+  <app-container classes="container-1">
+    <ng-container *ngIf="(list$) | async as list; else loadingOrError">
+      <app-list class="item" *ngFor="let item of list" [resource]="item"></app-list>
+      <br>
+    </ng-container>
+    <ng-template #loadingOrError>
+      <ng-container *ngIf="errorObject; else loading">
+        <span class="centering">
+          Valami hiba történt!
+        </span>
+      </ng-container>
+      <ng-template #loading>
+        <span class="centering">
+          <mat-spinner></mat-spinner>
+        </span>
+      </ng-template>
+    </ng-template>
+  </app-container>
+
+  <mat-card class="margin-bottom">
+    <mat-card-header>
+      <mat-card-title>Add new resources</mat-card-title>
+    </mat-card-header>
+    <mat-card-content >
+        <mat-form-field style="flex: 1 1;" class="max-width">
+            <mat-label>Resource name: *</mat-label>
+            <input type="text" name="resourceName" formControlName="name" matInput>
+          </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <button mat-raised-button [disabled]="form?.invalid" (click)="addResource()" color="warn">Add service</button>
+</app-container>

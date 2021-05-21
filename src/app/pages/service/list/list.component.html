@@ -1,0 +1,24 @@
+<app-search (newItemEvent)="getServices($event)"></app-search>
+<app-container classes="container-1">
+  <ng-container *ngIf="(list$) | async as list; else loadingOrError">
+    <app-card class="item" *ngFor="let item of list" [service]="item"></app-card>
+    <br>
+  </ng-container>
+  <ng-template #loadingOrError>
+    <ng-container *ngIf="errorObject; else loading">
+      <span class="centering">
+        Valami hiba történt!
+      </span>
+    </ng-container>
+    <ng-template #loading>
+      <span class="centering">
+        <mat-spinner></mat-spinner>
+      </span>
+    </ng-template>
+  </ng-template>
+</app-container>
+<ng-container *ngIf="scrollButton">
+  <button mat-fab #scrollButton class="go-top-button" (click)="goTop()" color="warn">
+    <mat-icon>arrow_upward</mat-icon>
+  </button>
+</ng-container>

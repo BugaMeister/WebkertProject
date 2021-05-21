@@ -1,0 +1,152 @@
+<app-container *ngIf="form" [formGroup]="form">
+  <mat-card class="margin-bottom">
+    <mat-card-header>
+      <mat-card-title>Add service</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="max-width margin-bottom">
+        <mat-label>Service name* : </mat-label>
+        <input type="text" name="name" matInput formControlName="name">
+      </mat-form-field>
+      <table class="max-width margin-bottom" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="max-width">
+              <mat-label>Category</mat-label>
+              <input type="text" name="category" matInput formControlName="category">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="max-width">
+              <mat-label>Description</mat-label>
+              <input type="text" formControlName="description" name="description" matInput>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="max-width">
+              <mat-label>Service type</mat-label>
+              <input type="text" formControlName="serviceType" name="type" matInput>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="margin-bottom">
+    <mat-card-header>
+      <mat-card-title>State *</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Pick a state (required)</mat-label>
+        <mat-select required name="state" formControlName="state">
+          <mat-option *ngFor="let item of STATES | keyvalue" [value]="item.value">
+            {{item.value}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('state')?.hasError('required')">You must make a selection</mat-error>
+      </mat-form-field>
+      <table class="max-width margin-bottom" cellspacing="0">
+        <tr style="display: flex; align-items: center; justify-content: space-between;">
+          <td style="flex: 1;">
+            <mat-label>Service is enabled: *</mat-label>
+            <mat-radio-group formControlName="isServiceEnabled" class="max-width"
+              style="display: flex; flex-direction: column;">
+              <mat-radio-button value="true" style="margin-left: 16px;" class="margin-top">Yes</mat-radio-button>
+              <mat-radio-button value="false" style="margin-left: 16px;" class="margin-top">No</mat-radio-button>
+            </mat-radio-group>
+          </td>
+          <td style="flex: 1;">
+            <mat-label>Service is stateful: (if value is yes you can't change in the future)*</mat-label>
+            <mat-radio-group formControlName="isStateful" class="max-width"
+              style="display: flex; flex-direction: column;">
+              <mat-radio-button value="true" style="margin-left: 16px;" class="margin-top">Yes</mat-radio-button>
+              <mat-radio-button value="false" style="margin-left: 16px;" class="margin-top">No</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="margin-bottom" formArrayName="resources">
+    <mat-card-header>
+      <mat-card-title>Resources</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button color="secondary" class="max-width margin-bottom" (click)="addResource()">
+        <mat-icon>add</mat-icon>
+        Add resource
+      </button>
+      <span *ngFor="let item of getResource.controls; let i = index" class="max-width" style="display: flex;">
+        <mat-form-field [formGroupName]="i" style="flex: 1 1;">
+          <mat-label>Resource {{i + 1}}.</mat-label>
+          <input type="text" name="resourceText" formControlName="name" matInput>
+        </mat-form-field>
+        <button mat-icon-button color="warn" (click)="removeResource(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="margin-bottom">
+    <mat-card-header>
+      <mat-card-title>Service terms</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table class="max-width margin-bottom" cellspacing="0">
+        <tr style="display: flex; align-items: center;">
+          <td style="flex: 1;">
+            <mat-form-field appearance="fill" class="max-width">
+              <mat-label>Start date</mat-label>
+              <input matInput [matDatepicker]="start" formControlName="startDate" autocomplete="new-password">
+              <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+              <mat-datepicker #start></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td style="flex: 1;">
+            <mat-form-field appearance="fill" class="max-width">
+              <mat-label>End date</mat-label>
+              <input matInput [matDatepicker]="end" formControlName="endDate" autocomplete="new-password">
+              <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+              <mat-datepicker #end></mat-datepicker>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="margin-bottom" formArrayName="notes">
+    <mat-card-header>
+      <mat-card-title>Notes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button color="secondary" class="max-width margin-bottom" (click)="addNote()">
+        <mat-icon>add</mat-icon>
+        Add new Note
+      </button>
+      <span *ngFor="let item of getNote.controls; let i = index" class="max-width" style="display: flex;">
+        <mat-form-field [formGroupName]="i" style="flex: 1 1;">
+          <mat-label>Note {{i + 1}}.</mat-label>
+          <input type="text" name="noteText" formControlName="text" matInput>
+        </mat-form-field>
+        <button mat-icon-button color="warn" (click)="removeNote(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </span>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-error *ngIf="errorMessage != undefined">
+    <mat-label class="margin-bottom">{{errorMessage}}</mat-label>
+  </mat-error>
+
+  <button mat-raised-button [disabled]="form?.invalid" (click)="log()" color="warn">Add service</button>
+</app-container>
